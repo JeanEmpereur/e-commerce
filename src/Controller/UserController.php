@@ -15,11 +15,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
 
-    public function index()
+    public function index(UserRepository $userRepository)
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+      return $this->render('user/index.html.twig', [
+          'users' => $userRepository->findAll(),
+      ]);
     }
 
     public function signup(Request $request, UserPasswordEncoderInterface $encoder): Response
@@ -37,6 +37,7 @@ class UserController extends AbstractController
                     $user,
                     $user->getPassword())
             );
+            $user->setRoles(["ROLE_USER"]);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -56,21 +57,21 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("user/edit/{id}", name="user_edit")
-     */
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder)
     {
-        $user->setProfilPic(new File($this->getParameter('uploads') . '/' . $user->getProfilPic()));
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $user->setPassword(
+                $encoder->encodePassword(
+                    $user,
+                    $user->getPassword())
+            );
             $user = $form->getData();
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('indexUser');
         }
 
         return $this->render('user/edit.html.twig', [
@@ -86,7 +87,7 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('indexUser');
     }
 
     public function login (){
