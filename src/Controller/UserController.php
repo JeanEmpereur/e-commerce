@@ -42,11 +42,14 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home', array(
+              'success' => "Le domaine a bien été ajouté"
+            ));
         }
 
         return $this->render('user/new.html.twig', [
             'form' => $form->createView(),
+            'fail' => "Pas bon ton truc",
         ]);
     }
 
@@ -71,7 +74,29 @@ class UserController extends AbstractController
             $user = $form->getData();
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('indexUser');
+            return $this->redirectToRoute('showUser');
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    public function editAdmin(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    {
+        $form = $this->createForm(AdminType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $encoder->encodePassword(
+                    $user,
+                    $user->getPassword())
+            );
+            $user = $form->getData();
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('users');
         }
 
         return $this->render('user/edit.html.twig', [
@@ -87,7 +112,7 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('indexUser');
+        return $this->redirectToRoute('home');
     }
 
     public function login (){

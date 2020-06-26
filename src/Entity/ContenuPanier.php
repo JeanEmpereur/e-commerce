@@ -25,9 +25,10 @@ class ContenuPanier
      */
     private $produit;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="contenuPanier")
-     */
+     /**
+      * @ORM\ManyToOne(targetEntity=Panier::class)
+      * @ORM\JoinColumn(nullable=false)
+      */
     private $panier;
 
     /**
