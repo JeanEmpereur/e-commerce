@@ -36,11 +36,6 @@ class User implements UserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $profilPic;
-
-    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
