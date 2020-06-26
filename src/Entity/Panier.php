@@ -33,6 +33,12 @@ class Panier
      */
     private $Etat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ContenuPanier::class, inversedBy="panier")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contenuPanier;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +76,18 @@ class Panier
     public function setEtat(bool $Etat): self
     {
         $this->Etat = $Etat;
+
+        return $this;
+    }
+
+    public function getContenuPanier(): ?ContenuPanier
+    {
+        return $this->contenuPanier;
+    }
+
+    public function setContenuPanier(?ContenuPanier $contenuPanier): self
+    {
+        $this->contenuPanier = $contenuPanier;
 
         return $this;
     }
