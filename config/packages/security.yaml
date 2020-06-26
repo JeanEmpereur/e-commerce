@@ -3,12 +3,8 @@ security:
     encoders:
         App\Entity\User:
             algorithm: auto
-
     providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
+        users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

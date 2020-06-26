@@ -51,20 +51,9 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author", orphanRemoval=true)
-     */
-    private $articles;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true)
-     */
-    private $comments;
-
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
-        $this->comments = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -179,36 +168,5 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
-            // set the owning side to null (unless already changed)
-            if ($article->getAuthor() === $this) {
-                $article->setAuthor(null);
-            }
-        }
-
-        return $this;
     }
 }
