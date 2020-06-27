@@ -2,39 +2,30 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class ProduitController extends AbstractController
 {
-    /**
-     * @Route("/produit", name="produit")
-     */
-    public function index(Request $request)
+    public function index(Request $request, ProduitRepository $produitRepository)
     {
       $success = null;
       $success = $request->get('success');
         return $this->render('produit/index.html.twig', [
-            'controller_name' => 'ProduitController',
-            'success' => $success,
-            'fail' => null
+            'produits' => $produitRepository->findAll(),
+            'success' => $success
         ]);
     }
-    /**
-     * @Route("/produit/add", name="produit_add")
-     */
+
     public function add(Request $request): Response
     {
         $produit = new Produit();
@@ -48,7 +39,9 @@ class ProduitController extends AbstractController
             $entityManager->persist($produit);
             $entityManager->flush();
 
-            return $this->redirectToRoute('produit_index');
+            return $this->redirectToRoute('home', array(
+              'success' => "Le produit a bien été ajouté"
+            ));
         }
 
         return $this->render('produit/new.html.twig', [
@@ -57,9 +50,6 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="produit_show", methods={"GET", "POST"})
-     */
     public function show(produit $produit, Request $request): Response
     {
         return $this->render('produit/show.html.twig', [
@@ -67,10 +57,6 @@ class ProduitController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/edit/{id}", name="produit_edit", methods={"GET","POST"})
-     */
     public function edit(Request $request, produit $produit): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
@@ -82,7 +68,9 @@ class ProduitController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('produit_index');
+            return $this->redirectToRoute('home', array(
+              'success' => "Le produit a bien été modifié"
+            ));
         }
 
         return $this->render('produit/edit.html.twig', [
@@ -90,9 +78,6 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/delete/{id}", name="produit_delete", methods={"DELETE"})
-     */
     public function delete(Request $request, produit $produit): Response
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
@@ -101,6 +86,8 @@ class ProduitController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('produit_index');
+        return $this->redirectToRoute('home', array(
+          'success' => "Le produit a bien été supprimé"
+        ));
     }
 }

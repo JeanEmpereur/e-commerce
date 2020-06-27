@@ -17,36 +17,25 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
     <h1>Produit index</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.stock }}</td>
-                <td>
-                    <a href="{{ path('showproduit', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('editproduit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('addproduit') }}">Create new</a>
+    <a class="btn btn-lg btn-block btn-success" href="{{ path('addProduit') }}">Create new</a>
+    <div class="card-deck mb-3 text-center">
+      {% for produit in produits %}
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">{{ produit.nom }}</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">photo</h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>${{ produit.prix }}</li>
+            <li>{{ produit.description }}</li>
+            <li>Stock restant : {{ produit.stock }}</li>
+          </ul>
+          <a class="btn btn-lg btn-block btn-primary" href="{{ path('showProduit', {'id': produit.id}) }}">Voir plus</a>
+        </div>
+      </div>
+      {% else %}
+      <p>no records found</p>
+      {% endfor %}
+    </div>
 {% endblock %}

@@ -25,10 +25,22 @@ logout:
 
 #Route Produit
 #ADMIN
+addProduit:
+  path: /produit/add
+  controller: App\Controller\ProduitController::add
+editProduit:
+  path: /produit/edit/{id}
+  controller: App\Controller\ProduitController::edit
+deleteProduit:
+  path: /produit/delete/{id}
+  controller: App\Controller\ProduitController::delete
+#USER
 home:
   path: /
   controller: App\Controller\ProduitController::index
-#USER
+showProduit:
+  path: /{id}
+  controller: App\Controller\ProduitController::show
 
 #Route Panier
 #ADMIN
