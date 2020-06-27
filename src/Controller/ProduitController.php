@@ -19,11 +19,14 @@ class ProduitController extends AbstractController
     # Permet d'afficher tous les produits (page principale)
     public function index(Request $request, ProduitRepository $produitRepository)
     {
+      $error = null;
       $success = null;
+      $error = $request->get('error');
       $success = $request->get('success');
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
-            'success' => $success
+            'success' => $success,
+            'error' => $error
         ]);
     }
 
@@ -55,8 +58,11 @@ class ProduitController extends AbstractController
     # Permet de regarder un produit
     public function show(produit $produit, Request $request): Response
     {
+        $success = null;
+        $success = $request->get('success');
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'success' => $success
         ]);
     }
 
@@ -72,8 +78,9 @@ class ProduitController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('home', array(
-              'success' => "Le produit a bien été modifié"
+            return $this->redirectToRoute('showProduit', array(
+              'id' => $produit->getId(),
+              'success' => "Modification effectuer"
             ));
         }
 

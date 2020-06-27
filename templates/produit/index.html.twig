@@ -18,6 +18,15 @@
       </div>
     </div>
     {% endif %}
+    {% if error != null %}
+    <div class="alert alert-danger mb-3" id="success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div class="text-center">
+        <p><strong>Erreur ! </strong></p>
+        <p>{{ error }}</p>
+      </div>
+    </div>
+    {% endif %}
 
     <a class="btn btn-lg btn-success mb-4" href="{{ path('addProduit') }}">Ajouter un produit</a>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

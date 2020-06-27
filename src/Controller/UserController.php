@@ -55,10 +55,13 @@ class UserController extends AbstractController
     }
 
     # Permet de regarder un seul compte en détails
-    public function show(User $user): Response
+    public function show(User $user, Request $request): Response
     {
+        $success = null;
+        $success = $request->get('success');
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'success' => $success
         ]);
     }
 
@@ -67,7 +70,6 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
                 $encoder->encodePassword(
@@ -78,6 +80,7 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('showUser', array(
+              'id' => $user->getId(),
               'success' => "Modification effectuer"
             ));
         }
