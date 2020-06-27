@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
 
+    # Montre tous les utilisateurs créer (accessible que au ADMIN)
     public function index(UserRepository $userRepository)
     {
       return $this->render('user/index.html.twig', [
@@ -22,6 +23,7 @@ class UserController extends AbstractController
       ]);
     }
 
+    # Permet de faire l'inscription d'un nouveau compte
     public function signup(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
@@ -43,16 +45,16 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('home', array(
-              'success' => "Le domaine a bien été ajouté"
+              'success' => "Vous avez bien créer votre compte"
             ));
         }
 
         return $this->render('user/new.html.twig', [
-            'form' => $form->createView(),
-            'fail' => "Pas bon ton truc",
+            'form' => $form->createView()
         ]);
     }
 
+    # Permet de regarder un seul compte en détails
     public function show(User $user): Response
     {
         return $this->render('user/show.html.twig', [
@@ -60,6 +62,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    # Permet de modifier un seul compte
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder)
     {
         $form = $this->createForm(UserType::class, $user);
@@ -74,7 +77,9 @@ class UserController extends AbstractController
             $user = $form->getData();
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('showUser');
+            return $this->redirectToRoute('showUser', array(
+              'success' => "Modification effectuer"
+            ));
         }
 
         return $this->render('user/edit.html.twig', [
@@ -82,6 +87,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    # Permet de modifier un seul compte (ajoute le role)
     public function editAdmin(Request $request, User $user, UserPasswordEncoderInterface $encoder)
     {
         $form = $this->createForm(AdminType::class, $user);
@@ -96,7 +102,9 @@ class UserController extends AbstractController
             $user = $form->getData();
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('users');
+            return $this->redirectToRoute('users', array(
+              'success' => "Modification du compte effectuer"
+            ));
         }
 
         return $this->render('user/edit.html.twig', [
@@ -104,6 +112,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    # Permet de supprimer un seul compte (que pour les admin)
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
@@ -112,12 +121,16 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home', array(
+          'success' => "Le compte a été supprimé"
+        ));
     }
 
+    # Permet de se connecter
     public function login (){
         return $this->render("user/login.html.twig");
     }
 
+    # Permet de se déconnecter
     public function logout (){}
 }

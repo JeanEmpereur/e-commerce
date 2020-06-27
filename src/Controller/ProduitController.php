@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProduitController extends AbstractController
 {
+    # Permet d'afficher tous les produits (page principale)
     public function index(Request $request, ProduitRepository $produitRepository)
     {
       $success = null;
@@ -26,6 +27,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    # Permet d'ajouter un produit (ADMIN)
     public function add(Request $request): Response
     {
         $produit = new Produit();
@@ -50,6 +52,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    # Permet de regarder un produit
     public function show(produit $produit, Request $request): Response
     {
         return $this->render('produit/show.html.twig', [
@@ -57,6 +60,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    # Permet de modifier un produit (ADMIN)
     public function edit(Request $request, produit $produit): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
@@ -78,6 +82,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
+    # Permet de supprimer un produit (ADMIN)
     public function delete(Request $request, produit $produit): Response
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {

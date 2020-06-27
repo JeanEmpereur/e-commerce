@@ -37,4 +37,4 @@ security:
          - { path: ^/user, roles: ROLE_USER }
          - { path: ^/panier, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
-         #- { path: ^/produit, roles: ROLE_ADMIN }
+         - { path: ^/produit, roles: ROLE_ADMIN }
