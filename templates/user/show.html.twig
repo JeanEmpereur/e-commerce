@@ -4,7 +4,15 @@
 
 {% block body %}
     <h1>User</h1>
-
+    {% if success != null %}
+    <div class="alert alert-success mb-3" id="success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div class="text-center">
+        <p><strong>Succès ! </strong></p>
+        <p>{{ success }}</p>
+      </div>
+    </div>
+    {% endif %}
     <table class="table">
         <tbody>
             <tr>
