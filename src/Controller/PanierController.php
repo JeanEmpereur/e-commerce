@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Controller\ContenuPanier;
 use App\Repository\PanierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
@@ -13,9 +14,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class PanierController extends AbstractController
 {
-    /**
-     * @Route("/panier", name="panier")
-     */
     public function index()
     {
         return $this->render('panier/index.html.twig', [
@@ -23,7 +21,7 @@ class PanierController extends AbstractController
         ]);
     }
 
-    public function add(Request $request, User $user): Response
+    public function add(Request $request, User $user, Produit $produit): Response
     {
         $panier = new Panier();
         $panier->setUser($user);
@@ -33,6 +31,8 @@ class PanierController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($panier);
         $entityManager->flush();
+        $cp = new ContenuPanier();
+        $cp->add($cp, $produit, $panier);
 
         return $this->redirectToRoute('home');
     }

@@ -84,14 +84,33 @@ class Panier
         return $this;
     }
 
-    public function getContenuPanier(): ?ContenuPanier
+    /**
+     * @return Collection|ContenuPanier[]
+     */
+    public function getContenuPanier(): Collection
     {
         return $this->contenuPanier;
     }
 
-    public function setContenuPanier(?ContenuPanier $contenuPanier): self
+    public function addContenuPanier(ContenuPanier $contenuPanier): self
     {
-        $this->contenuPanier = $contenuPanier;
+        if (!$this->contenuPanier->contains($contenuPanier)) {
+            $this->contenuPanier[] = $contenuPanier;
+            $contenuPanier->setPanier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContenuPanier(ContenuPanier $contenuPanier): self
+    {
+        if ($this->contenuPanier->contains($contenuPanier)) {
+            $this->contenuPanier->removeElement($contenuPanier);
+            // set the owning side to null (unless already changed)
+            if ($contenuPanier->getPanier() === $this) {
+                $contenuPanier->setPanier(null);
+            }
+        }
 
         return $this;
     }

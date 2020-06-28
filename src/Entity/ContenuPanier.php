@@ -63,33 +63,14 @@ class ContenuPanier
         return $this;
     }
 
-    /**
-     * @return Collection|Panier[]
-     */
-    public function getPanier(): Collection
+    public function getPanier(): ?panier
     {
         return $this->panier;
     }
 
-    public function addPanier(Panier $panier): self
+    public function setPanier(?Panier $panier): self
     {
-        if (!$this->panier->contains($panier)) {
-            $this->panier[] = $panier;
-            $panier->setContenuPanier($this);
-        }
-
-        return $this;
-    }
-
-    public function removePanier(Panier $panier): self
-    {
-        if ($this->panier->contains($panier)) {
-            $this->panier->removeElement($panier);
-            // set the owning side to null (unless already changed)
-            if ($panier->getContenuPanier() === $this) {
-                $panier->setContenuPanier(null);
-            }
-        }
+        $this->panier = $panier;
 
         return $this;
     }

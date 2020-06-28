@@ -49,13 +49,13 @@ addProduit:
   path: /panier/add
   controller: App\Controller\PanierController::add
 editProduit:
-  path: /panier/add/{id}
+  path: /panier/add/{idUser}/{idProduit}
   controller: App\Controller\PanierController::addPanier
 delete:
-  path: /panier/delete/{id}
+  path: /panier/delete/{idPanier}/{idCP}
   controller: App\Controller\PanierController::delete
 deleteAll:
-  path: /panier/delete/
+  path: /panier/delete/{idPanier}
   controller: App\Controller\PanierController::deleteAll
 
 #Route ContenuPanier
