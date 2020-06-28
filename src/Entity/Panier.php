@@ -34,10 +34,14 @@ class Panier
     private $Etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ContenuPanier::class, inversedBy="panier")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=ContenuPanier::class, mappedBy="Panier")
      */
     private $contenuPanier;
+
+    public function __construct()
+    {
+        $this->ContenuPanier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

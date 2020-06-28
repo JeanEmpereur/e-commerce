@@ -3,38 +3,53 @@
 {% block title %}Produit index{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    <h1>Tous les produits</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Stock</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.stock }}</td>
-                <td>
-                    <a href="{{ path('showproduit', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('editproduit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if success != null %}
+    <div class="alert alert-success mb-3" id="success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div class="text-center">
+        <p><strong>Succès ! </strong></p>
+        <p>{{ success }}</p>
+      </div>
+    </div>
+    {% endif %}
+    {% if error != null %}
+    <div class="alert alert-danger mb-3" id="success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div class="text-center">
+        <p><strong>Erreur ! </strong></p>
+        <p>{{ error }}</p>
+      </div>
+    </div>
+    {% endif %}
 
-    <a href="{{ path('addproduit') }}">Create new</a>
+    <a class="btn btn-lg btn-success mb-4" href="{{ path('addProduit') }}">Ajouter un produit</a>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+      {% for produit in produits %}
+      <div class="col mb-4">
+        <div class="card box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ produit.nom }}</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">photo</h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>${{ produit.prix }}</li>
+              <li>{{ produit.description }}</li>
+              <li>Stock restant : {{ produit.stock }}</li>
+            </ul>
+            <a class="btn btn-lg btn-block btn-primary" href="{{ path('showProduit', {'id': produit.id}) }}">Voir plus</a>
+          </div>
+        </div>
+      </div>
+
+      {% else %}
+      <p>no records found</p>
+      {% endfor %}
+    </div>
 {% endblock %}

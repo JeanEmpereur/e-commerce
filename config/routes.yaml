@@ -1,9 +1,14 @@
 #Route User
-indexUser:
-   path: /user/viewAdmin
-   controller: App\Controller\UserController::index
+#ADMIN
+users:
+  path: /admin/user
+  controller: App\Controller\UserController::index
+deleteUser:
+  path: /admin/delete/{id}
+  controller: App\Controller\UserController::delete
+#USER
 addUser:
-  path: /user/new
+  path: /sign-up
   controller: App\Controller\UserController::signup
 editUser:
   path: /user/edit/{id}
@@ -11,9 +16,6 @@ editUser:
 showUser:
   path: /user/show/{id}
   controller: App\Controller\UserController::show
-deleteUser:
-  path: /user/delete/{id}
-  controller: App\Controller\UserController::delete
 login:
   path: /login
   controller: App\Controller\UserController::login
@@ -22,12 +24,28 @@ logout:
   controller: App\Controller\UserController::logout
 
 #Route Produit
+#ADMIN
+addProduit:
+  path: /produit/add
+  controller: App\Controller\ProduitController::add
+editProduit:
+  path: /produit/edit/{id}
+  controller: App\Controller\ProduitController::edit
+deleteProduit:
+  path: /produit/delete/{id}
+  controller: App\Controller\ProduitController::delete
+#USER
 home:
   path: /
   controller: App\Controller\ProduitController::index
+showProduit:
+  path: /{id}
+  controller: App\Controller\ProduitController::show
 
 #Route Panier
-
-
+#ADMIN
+#USER
 
 #Route ContenuPanier
+#ADMIN
+#USER

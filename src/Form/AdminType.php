@@ -7,20 +7,27 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class AdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email')
             ->add('password', PasswordType::class)
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
+            ->add('firstName')
+            ->add('lastName')
+            ->add('roles', 'choice', array(
+                'label' => "Role",
+                'choices' => ["admin","user"],
+                'choice_value' => function ($choice) {
+                    return $choice;
+                },
+                'multiple' => false,
+                'mapped' => false  // ce champ n'est pas mis en correspondance avec la propriété de l'objet
+            ))
         ;
     }
 
