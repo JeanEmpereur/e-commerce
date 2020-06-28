@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ContenuPanier;
+use App\Entity\Panier;
+use App\Entity\Produit;
 use App\Repository\ContenuPanierRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,17 +24,32 @@ class ContenuPanierController extends AbstractController
         ]);
     }
 
-    public function add(Request $request, ContenuPanier $cp, Produit $produit, Panier $panier): Response
+    public function add(Request $request): Response
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $idPanier = $request->get('panier');
+        $idProduit = $request->get('produit');
+
+        $panier = $em->getRepository('App:Panier')->find($idPanier);
+        $produit = $em->getRepository('App:Produit')->find($idProduit);
+
+        $cp = new ContenuPanier();
         $cp->setProduit($produit);
         $cp->setPanier($panier);
         $cp->setQuantite(1);
         $cp->setDate(new \DateTime);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($cp);
-        $entityManager->flush();
+        $em->persist($cp);
+        $em->flush();
 
-        return true;
+        return $this->redirectToRoute('home');
+    }
+
+    public function delete(ContenuPanier $contenuPanier){
+      $em = $this->getDoctrine()->getManager();
+      $em->remove($contenuPanier);
+      $em->flush();
+
     }
 }

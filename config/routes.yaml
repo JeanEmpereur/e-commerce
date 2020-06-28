@@ -45,19 +45,25 @@ showProduit:
 #Route Panier
 #ADMIN
 #USER
-addProduit:
-  path: /panier/add
+indexPanier:
+  path: /panier/{user}
+  controller: App\Controller\PanierController::index
+addPanier:
+  path: /panier/add/{user}/{produit}
   controller: App\Controller\PanierController::add
-editProduit:
-  path: /panier/add/{idUser}/{idProduit}
+addOnePanier:
+  path: /panier/add
   controller: App\Controller\PanierController::addPanier
-delete:
+deletePanier:
   path: /panier/delete/{idPanier}/{idCP}
   controller: App\Controller\PanierController::delete
-deleteAll:
+deleteAllPanier:
   path: /panier/delete/{idPanier}
   controller: App\Controller\PanierController::deleteAll
 
 #Route ContenuPanier
 #ADMIN
 #USER
+addConternuPanier:
+  path: /contenu/panier/add
+  controller: App\Controller\ContenuPanierController::add

@@ -34,7 +34,7 @@
       <div class="product-stock">Désolé, il n'y a plus ce produit en stock</div>
       {% endif %}
       <hr>
-			<a href="/panier/add" class="btn btn-success mr-4">Ajouter au panier</a>
+			<a href="{{ path('addPanier', {'produit': produit.id, 'user': app.user.id}) }}" class="btn btn-success mr-4">Ajouter au panier</a>
       <!-- ADMIN -->
       {% if app.user %}
         <hr>
