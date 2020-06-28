@@ -1,3 +1,69 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+#Route User
+#ADMIN
+users:
+  path: /admin/user
+  controller: App\Controller\UserController::index
+deleteUser:
+  path: /admin/delete/{id}
+  controller: App\Controller\UserController::delete
+#USER
+addUser:
+  path: /sign-up
+  controller: App\Controller\UserController::signup
+editUser:
+  path: /user/edit/{id}
+  controller: App\Controller\UserController::edit
+showUser:
+  path: /user/show/{id}
+  controller: App\Controller\UserController::show
+login:
+  path: /login
+  controller: App\Controller\UserController::login
+logout:
+  path: /logout
+  controller: App\Controller\UserController::logout
+
+#Route Produit
+#ADMIN
+addProduit:
+  path: /produit/add
+  controller: App\Controller\ProduitController::add
+editProduit:
+  path: /produit/edit/{id}
+  controller: App\Controller\ProduitController::edit
+deleteProduit:
+  path: /produit/delete/{id}
+  controller: App\Controller\ProduitController::delete
+#USER
+home:
+  path: /
+  controller: App\Controller\ProduitController::index
+showProduit:
+  path: /{id}
+  controller: App\Controller\ProduitController::show
+
+#Route Panier
+#ADMIN
+#USER
+indexPanier:
+  path: /panier/{user}
+  controller: App\Controller\PanierController::index
+addPanier:
+  path: /panier/add/{user}/{produit}
+  controller: App\Controller\PanierController::add
+addOnePanier:
+  path: /panier/add
+  controller: App\Controller\PanierController::addPanier
+deletePanier:
+  path: /panier/delete/{idPanier}/{idCP}
+  controller: App\Controller\PanierController::delete
+deleteAllPanier:
+  path: /panier/delete/{idPanier}
+  controller: App\Controller\PanierController::deleteAll
+
+#Route ContenuPanier
+#ADMIN
+#USER
+addConternuPanier:
+  path: /contenu/panier/add
+  controller: App\Controller\ContenuPanierController::add

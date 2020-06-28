@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+<div class="item-container">
+  <div class="container">
+    <div class="col-md-12">
+    {% if success != null %}
+    <div class="alert alert-success mb-3" id="success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div class="text-center">
+        <p><strong>Succès ! </strong></p>
+        <p>{{ success }}</p>
+      </div>
+    </div>
+    {% endif %}
+      <div class="product col-md-3 service-image-left">
+        <center>
+          <img id="item-display" src="/img/panda_roux.jpg" width="300" height="200" alt="photo"></img>
+        </center>
+      </div>
+    </div>
+
+    <div class="col-md-7 mb-4">
+      <div class="product-title">{{ produit.nom }}</div>
+      <div class="product-desc">{{ produit.description }}</div>
+      <hr>
+      <div class="product-price">$ {{ produit.prix }}</div>
+      {% if produit.stock >= 1 %}
+      <div class="product-stock">En Stock</div>
+      {% else %}
+      <div class="product-stock">Désolé, il n'y a plus ce produit en stock</div>
+      {% endif %}
+      <hr>
+			<a href="{{ path('addPanier', {'produit': produit.id, 'user': app.user.id}) }}" class="btn btn-success mr-4">Ajouter au panier</a>
+      <!-- ADMIN -->
+      {% if app.user %}
+        <hr>
+        <div class="btn-toolbar">
+          <a href="{{ path('editProduit', {'id': produit.id}) }}" class="btn btn-primary mr-2">edit</a>
+
+          {{ include('produit/_delete_form.html.twig') }}
+        </div>
+      {% endif %}
+      <!-- ADMIN -->
+    </div>
+    <a href="{{ path('home') }}"><button type="button" class="btn btn-info">Retour</button></a>
+  </div>
+</div>
+{% endblock %}

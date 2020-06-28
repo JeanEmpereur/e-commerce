@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+<div class="item-container">
+  <div class="container">
+    <div class="col-md-12">
+    {% if success != null %}
+    <div class="alert alert-success mb-3" id="success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <div class="text-center">
+        <p><strong>Succès ! </strong></p>
+        <p>{{ success }}</p>
+      </div>
+    </div>
+    {% endif %}
+    </div>
+    <a href="{{ path('home') }}"><button type="button" class="btn btn-info">Retour</button></a>
+    <div class="col-md-7 mb-4">
+      <div class="mt-4">
+        <p> Email : {{ user.email }}</p>
+      </div>
+      <div>
+        <p> Nom : {{ user.lastname }}</p>
+      </div>
+      <div>
+        <p> Prénom : {{ user.firstname }}</p>
+      </div>
+
+      <hr>
+        <div class="btn-toolbar">
+          <a href="{{ path('editUser', {'id': user.id}) }}" class="btn btn-primary mr-2">edit</a>
+          <!-- ADMIN -->
+          <a href="{{ path('deleteUser', {'id': user.id}) }}" class="btn btn-danger mr-2">Supprimer</a>
+          <!-- ADMIN -->
+        </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
