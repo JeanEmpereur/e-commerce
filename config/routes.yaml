@@ -55,10 +55,10 @@ addOnePanier:
   path: /panier/add
   controller: App\Controller\PanierController::addPanier
 deletePanier:
-  path: /panier/delete/{idPanier}/{idCP}
+  path: /panier/delete/{id}/{contenupanier}
   controller: App\Controller\PanierController::delete
 deleteAllPanier:
-  path: /panier/delete/{idPanier}
+  path: /panier/delete/{id}
   controller: App\Controller\PanierController::deleteAll
 
 #Route ContenuPanier

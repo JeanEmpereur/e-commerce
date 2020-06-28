@@ -20,10 +20,10 @@ class PanierController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $panier = $em->getRepository('App:Panier')->findOneby(['user' => $user]);
-        //return $this->redirectToRoute('home', array( 'success' => $panier->getId()));
-        $contenuPaniers = $em->getRepository('App:ContenuPanier')->find(['panier' => $panier]);
+        $contenuPaniers = $em->getRepository('App:ContenuPanier')->find($panier);
         return $this->render('panier/index.html.twig', [
-            'paniers' => $contenuPaniers
+            'paniers' => $contenuPaniers,
+            'p' => $panier
         ]);
     }
 
