@@ -45,6 +45,18 @@ showProduit:
 #Route Panier
 #ADMIN
 #USER
+addProduit:
+  path: /panier/add
+  controller: App\Controller\PanierController::add
+editProduit:
+  path: /panier/add/{id}
+  controller: App\Controller\PanierController::addPanier
+delete:
+  path: /panier/delete/{id}
+  controller: App\Controller\PanierController::delete
+deleteAll:
+  path: /panier/delete/
+  controller: App\Controller\PanierController::deleteAll
 
 #Route ContenuPanier
 #ADMIN
